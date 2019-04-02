@@ -18,5 +18,18 @@ public class Account {
         return pass;
     }
 
+    public void setUsername(String username){
+        user = username;
+    }
+
+    public void setPassword(String password){
+        pass = password;
+    }
+
+    public String toString(){
+        return  "Username:" + user + "\n" +
+                "Password:" + pass;
+    }
+
 
 }
