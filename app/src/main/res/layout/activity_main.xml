@@ -33,4 +33,10 @@
             android:layout_alignParentStart="true"
             app:fontFamily="@font/crappyterminal" android:layout_alignParentTop="true"
             android:textColor="@android:color/holo_green_light"/>
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:orientation="vertical" android:scrollbars="vertical"/>
+    </ScrollView>
 </RelativeLayout>

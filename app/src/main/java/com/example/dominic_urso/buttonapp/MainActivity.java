@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         Window.setBackgroundColor(Color.BLACK);
         txt_box = findViewById(R.id.txt_box);
         txt_view = findViewById(R.id.txt_view);
+        txt_view.setMovementMethod(new ScrollingMovementMethod());
 
 
 
@@ -61,89 +62,91 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-public void war(){
-    String winner = "";
-    String mWinner = "";
-    int temps = 0;
-    int draws = 0;
-    int p1Wins = 0;
-    int p2Wins = 0;
-    int tieWins = 0;
-    boolean draw = false;
-    Deck deck = new Deck();
-    deck.shuffle();
-    ArrayList<Card> half = new ArrayList();
-    ArrayList<Card> half2 = new ArrayList();
-    ArrayList<Card> temp = new ArrayList();
-    for(int i = 0; i < 26; i++){
-        half.add(deck.deal());
-    }
-    for(int i = 0; i < 26; i++){
-        half2.add(deck.deal());
-    }
-    Scanner scan = new Scanner(System.in);
-    while(half2.size() > 0 && half.size() > 0){
-        while(draw == true){
-             txt_view.setText("press 1 to draw");
-            if(scan.nextInt() == 1){
-                draw = true;
+    public void war(){
+        txt_view.setText("");
+        String winner = "";
+        String mWinner = "";
+        int temps = 0;
+        int draws = 0;
+        int p1Wins = 0;
+        int p2Wins = 0;
+        int tieWins = 0;
+        boolean draw = false;
+        Deck deck = new Deck();
+        deck.shuffle();
+        ArrayList<Card> half = new ArrayList();
+        ArrayList<Card> half2 = new ArrayList();
+        ArrayList<Card> temp = new ArrayList();
+        for(int i = 0; i < 26; i++){
+            half.add(deck.deal());
+        }
+        for(int i = 0; i < 26; i++){
+            half2.add(deck.deal());
+        }
+        Scanner scan = new Scanner(System.in);
+        while(half2.size() > 0 && half.size() > 0){
+            while(draw == true){
+                txt_view.append("press 1 to draw");
+                if(scan.nextInt() == 1){
+                    draw = true;
+                }
             }
-        }
-         txt_view.setText(half.get(half.size() - 1).toString() + " vs " + half2.get(half2.size() - 1).toString() );
-        if(half.get(half.size() - 1).getRank() > half2.get(half2.size() - 1).getRank()){
-            half.add(0, half2.remove(half2.size() - 1));
-            half.add(0, half.remove(half.size() - 1));
-            for(int i = 0; i < temps; i++){
-                half.add(0, temp.remove(0));
+            txt_view.append(half.get(half.size() - 1).toString() + " vs " + half2.get(half2.size() - 1).toString() );
+            if(half.get(half.size() - 1).getRank() > half2.get(half2.size() - 1).getRank()){
+                half.add(0, half2.remove(half2.size() - 1));
+                half.add(0, half.remove(half.size() - 1));
+                for(int i = 0; i < temps; i++){
+                    half.add(0, temp.remove(0));
+                }
+                winner = "Player 1";
+                p1Wins++;
             }
-            winner = "Player 1";
-            p1Wins++;
-        }
 
-        else if(half.get(half.size() - 1).getRank() < half2.get(half2.size() - 1).getRank()){
-            half2.add(1, half.remove(half.size() - 1));
+            else if(half.get(half.size() - 1).getRank() < half2.get(half2.size() - 1).getRank()){
+                half2.add(1, half.remove(half.size() - 1));
 
-            half2.add(0, half2.remove(half2.size() - 1));
-            for(int i = 0; i < temps; i++){
-                half2.add(0, temp.remove(0));
+                half2.add(0, half2.remove(half2.size() - 1));
+                for(int i = 0; i < temps; i++){
+                    half2.add(0, temp.remove(0));
+                }
+                winner = "Player 2";
+                p2Wins++;
             }
-            winner = "Player 2";
-            p2Wins++;
+            else if(half.get(half.size() - 1).getRank() == half2.get(half2.size() - 1).getRank()){
+                temp.add(0, half.remove(half.size() - 1));
+                temp.add(0, half.remove(half.size() - 1));
+                temp.add(0, half.remove(half.size() - 1));
+
+                temp.add(0, half2.remove(half2.size() - 1));
+                temp.add(0, half2.remove(half2.size() - 1));
+                temp.add(0, half2.remove(half2.size() - 1));
+                winner = "Tie";
+                tieWins++;
+
+
+            }
+            draw = false;
+            draws++;
+            txt_view.append("Hand Details:\tP1 Cards Left " + half.size()  + " \tP2 Cards Left " + half2.size() + " \tPile Of Cards " + temp.size() + "\t\tdraw: " + draws + "\tResult: " + winner + "\n");
+            temps = temp.size();
+
         }
-        else if(half.get(half.size() - 1).getRank() == half2.get(half2.size() - 1).getRank()){
-            temp.add(0, half.remove(half.size() - 1));
-            temp.add(0, half.remove(half.size() - 1));
-            temp.add(0, half.remove(half.size() - 1));
 
-            temp.add(0, half2.remove(half2.size() - 1));
-            temp.add(0, half2.remove(half2.size() - 1));
-            temp.add(0, half2.remove(half2.size() - 1));
-            winner = "Tie";
-            tieWins++;
-
-
-        }
-        draw = false;
-        draws++;
-         txt_view.setText("Hand Details:\tP1 Cards Left " + half.size()  + " \tP2 Cards Left " + half2.size() + " \tPile Of Cards " + temp.size() + "\t\tdraw: " + draws + "\tResult: " + winner + "\n");
-        temps = temp.size();
-
-    }
-
-    if(half2.size() != 0)
-        mWinner = "Player 2";
-    else
-        mWinner = "Player 1";
-     txt_view.setText("Match Details\n-------------- \n"+mWinner + " Won\n" +draws + " Hands Played\n" + "Player 1 Won " + p1Wins + " Hands\n" + "Player 2 Won " + p2Wins + " Hands\n" + tieWins + " Tied Hands\n"  );
+        if(half2.size() != 0)
+            mWinner = "Player 2";
+        else
+            mWinner = "Player 1";
+        txt_view.append("Match Details\n-------------- \n"+mWinner + " Won\n" +draws + " Hands Played\n" + "Player 1 Won " + p1Wins + " Hands\n" + "Player 2 Won " + p2Wins + " Hands\n" + tieWins + " Tied Hands\n"  );
 
     }
 
     public void connect4(){
+        txt_view.setText("");
         Scanner scan = new Scanner(System.in);
         // BUILDING BOARD
-        // txt_view.setText("Board Size\nRows:");
+        // txt_view.append("Board Size\nRows:");
         // int row = scan.nextInt();
-        // txt_view.setText("Colums:");
+        // txt_view.append("Colums:");
         // int column = scan.nextInt();
         int column = 8;
         int row = 8;
@@ -166,27 +169,27 @@ public void war(){
 
             for(int j = 0; j<column; j++)
             {
-                txt_view.setText("   |   ");
+                txt_view.append("   |   ");
                 if(board[i][j] == null)
-                    txt_view.setText(" ");
+                    txt_view.append(" ");
                 else
                 if(board[i][j] == true)
-                    txt_view.setText("X");
+                    txt_view.append("X");
                 else
                 if(board[i][j] == false)
-                    txt_view.setText("O");
+                    txt_view.append("O");
 
             }
-            txt_view.setText("   |   \n------------------------------------------------------------------------\n");
+            txt_view.append("   |   \n------------------------------------------------------------------------\n");
 
         }
         for(int j = 0; j<column; j++)
         {
-            txt_view.setText("   |   ");
-            txt_view.setText(j);
+            txt_view.append("   |   ");
+            txt_view.append(j + "");
 
         }
-        txt_view.setText("   |");
+        txt_view.append("   |");
         // END OF BUILDING BOARD
 
         int playerChoice = -1;
@@ -197,7 +200,7 @@ public void war(){
         Random rand = new Random();
         while(winCondition != true)
         {
-            txt_view.setText("\nSelect Row (0-" + (column - 1) + ")");
+            txt_view.append("\nSelect Row (0-" + (column - 1) + ")");
             playerChoice = scan.nextInt();
             for(int m = column - 1; m>-1 ; m--){
                 if(board[m][playerChoice] == null){
@@ -379,29 +382,29 @@ public void war(){
 
                 for(int j = 0; j<column; j++)
                 {
-                    txt_view.setText("   |   ");
+                    txt_view.append("   |   ");
                     if(board[i][j] == null)
-                        txt_view.setText(" ");
+                        txt_view.append(" ");
                     else
                     if(board[i][j] == true)
-                        txt_view.setText("X");
+                        txt_view.append("X");
                     else
                     if(board[i][j] == false)
-                        txt_view.setText("O");
+                        txt_view.append("O");
 
                 }
-                txt_view.setText("   |   \n------------------------------------------------------------------------\n");
+                txt_view.append("   |   \n------------------------------------------------------------------------\n");
 
             }
             for(int j = 0; j<column; j++)
             {
-                txt_view.setText("   |   ");
-                txt_view.setText(j);
+                txt_view.append("   |   ");
+                txt_view.append(j + "");
 
             }
-            txt_view.setText("   |");
+            txt_view.append("   |");
         }
-        txt_view.setText("\n" + winner + " wins");
+        txt_view.append("\n" + winner + " wins");
         // End Of Win Conditions
 
 
