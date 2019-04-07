@@ -30,8 +30,8 @@ public class MainActivity extends AppCompatActivity {
         txt_box = findViewById(R.id.txt_box);
         txt_view = findViewById(R.id.txt_view);
         txt_view.setMovementMethod(new ScrollingMovementMethod());
-
-
+        txt_view.setText("1 to play war, 2 to do nothing, 3 for test, 4 for new password, 5 for last passwords generated");
+        final ArrayList<String> prevPasswords = new ArrayList<String>();
 
 
         BgButton.setOnClickListener(new View.OnClickListener() {
@@ -43,12 +43,14 @@ public class MainActivity extends AppCompatActivity {
                         war();
                         break;
                     case "2":
-                        connect4();
+                        //connect4();
                         break;
                     case "3":
                         txt_view.setText(test);
                         break;
                     case "4":
+                        String password = "";
+                        txt_view.setText("");
                         int length, numChars = 0;
                         Random rand = new Random();
                         //Scanner scan = new Scanner(System.in);
@@ -56,9 +58,19 @@ public class MainActivity extends AppCompatActivity {
                         length = 12;
                         while(numChars != length) {
                             int character = rand.nextInt(93) + 33;
-                            txt_view.setText((char) character);
+                            password +=("" +(char) character);
                             numChars++;
                         }
+                        prevPasswords.add(password);
+                        txt_view.setText(password);
+                        break;
+                    case "5":
+                        txt_view.setText(" ");
+                        for(int i = 0; i < prevPasswords.getSize(); i++){
+                            txt_view.append(prevPasswords.get(i) + "\n");
+                        }
+                        break;
+
                     default:
                         txt_view.setText("its broke");
                         break;
