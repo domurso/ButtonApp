@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
         Scanner scan = new Scanner(System.in);
         while(half2.size() > 0 && half.size() > 0){
             while(draw == true){
-                txt_view.append("press 1 to draw");
+                //txt_view.append("press 1 to draw");
                 if(scan.nextInt() == 1){
                     draw = true;
                 }
@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
             }
             draw = false;
             draws++;
-            txt_view.append("Hand Details:\tP1 Cards Left " + half.size()  + " \tP2 Cards Left " + half2.size() + " \tPile Of Cards " + temp.size() + "\t\tdraw: " + draws + "\tResult: " + winner + "\n");
+            //txt_view.append("Hand Details:\tP1 Cards Left " + half.size()  + " \tP2 Cards Left " + half2.size() + " \tPile Of Cards " + temp.size() + "\t\tdraw: " + draws + "\tResult: " + winner + "\n");
             temps = temp.size();
 
         }
@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
             mWinner = "Player 2";
         else
             mWinner = "Player 1";
-        txt_view.append("Match Details\n-------------- \n"+mWinner + " Won\n" +draws + " Hands Played\n" + "Player 1 Won " + p1Wins + " Hands\n" + "Player 2 Won " + p2Wins + " Hands\n" + tieWins + " Tied Hands\n"  );
+        txt_view.setText("Match Details\n-------------- \n"+mWinner + " Won\n" +draws + " Hands Played\n" + "Player 1 Won " + p1Wins + " Hands\n" + "Player 2 Won " + p2Wins + " Hands\n" + tieWins + " Tied Hands\n"  );
 
     }
 }
