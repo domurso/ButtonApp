@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case "5":
                         txt_view.setText(" ");
-                        for(int i = 0; i < prevPasswords.getSize(); i++){
+                        for(int i = 0; i < prevPasswords.size(); i++){
                             txt_view.append(prevPasswords.get(i) + "\n");
                         }
                         break;
